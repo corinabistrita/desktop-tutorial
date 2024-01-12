@@ -45,4 +45,23 @@ fc pozitionare regina (rand):
 
 
 finalul.."
-""""
+"""
+numar_queens = 8  
+solutie_curenta =  
+solutions = []
+
+#functia de pozitionarea/verificarea corecta a reginei pe tabla de sah(orizontal,vertical,si diagonal)
+
+def pozitionarea_reginei(board,row,col):
+    #orizontal 
+    for i in range(col):
+        if board[row][i] == 1:
+            return 
+     #diagonal   
+     for i,j in zip(range(row,-1,-1),range(col,-1,-1)):
+        if board[i][j] == 1:
+        return 
+    
+    return True
+
+
