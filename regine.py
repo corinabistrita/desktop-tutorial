@@ -1,40 +1,36 @@
-numar_Regine = 8
+import time
+
+numar_regine = 8
+solutie_curenta = [0 for x in range(numar_regine)]
 solutii = []
 
-def afisare_solutie(board):
-    for row in board:
-        print(row)
-    print()
+def pozitie_corecta_tabla(testRow, testCol):
+    if testRow == 0:
+        return True
 
-def pozitii_corecte(board, row, col):
-    for i in range(row):
-        if board[i][col] == 1 or \
-           (col - (row - i) >= 0 and board[i][col - (row - i)] == 1) or \
-           (col + (row - i) < numar_Regine and board[i][col + (row - i)] == 1):
+    for row in range(0, testRow):
+        if testCol == solutie_curenta[row] or abs(testRow - row) == abs(testCol - solutie_curenta[row]):
             return False
+
     return True
 
-def rezolvare(board, row):
-    global numar_Regine, solutii
+def pozitionare_solutii(row):
+    global solutie_curenta, solutii, numar_regine
 
-    if row == numar_Regine:
-        solutii.append([r[:] for r in board])
-        return
+    for col in range(numar_regine):
+        if not pozitie_corecta_tabla(row, col):
+            continue
+        else:
+            solutie_curenta[row] = col
+            if row == (numar_regine - 1):
+                solutii.append(solutie_curenta.copy())
+                print("Solution number", len(solutii), solutie_curenta)
+            else:
+                pozitionare_solutii(row + 1)
 
-    for col in range(numar_Regine):
-        if pozitii_corecte(board, row, col):
-            board[row][col] = 1
-            rezolvare(board, row + 1)
-            board[row][col] = 0
 
-def gaseste_solutii():
-    global numar_Regine, solutii
+time.sleep(2)
+pozitionare_solutii(0)
 
-    board = [[0 for _ in range(numar_Regine)] for _ in range(numar_Regine)]
-    rezolvare(board, 0)
-
-gaseste_solutii()
-
-print(len(solutii), "solutii gasite")
 for solutie in solutii:
-    afisare_solutie(solutie)
+    print(solutie)
