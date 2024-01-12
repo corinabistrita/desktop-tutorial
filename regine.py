@@ -65,3 +65,25 @@ def pozitionarea_reginei(board,row,col):
     return True
 
 
+def pozitionare(row):
+    global solutie_curenta, solutions, numar_queens
+
+    stack = [(row, 0)] 
+    while stack:
+        current_row, current_col = stack.pop()
+
+        for col in range(current_col, numar_queens):
+            if not pozitionare (current_row, col):
+                continue
+
+            currentSolution[current_row] = col
+
+            if current_row == (numar_queens - 1):
+            else:
+                stack.append((current_row + 1, 0))
+                stack.append((current_row, col + 1))
+                break
+
+
+for solution in solutions:
+    print(solution)
