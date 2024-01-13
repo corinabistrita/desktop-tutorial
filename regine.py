@@ -47,18 +47,19 @@ def vizualizare(solutii):
         print("\n")
 
 def salvare_in_fisier(solutii, nume_fisier):
-    with open(nume_fisier, 'w') as file:
+    with open(nume_fisier, 'a', encoding='utf-8') as file:
         for idx, solutie in enumerate(solutii):
             file.write(f"Solutia numarul: {idx + 1}\n")
             for row in range(len(solutie)):
                 line = ""
                 for col in range(len(solutie)):
                     if col == solutie[row]:
-                        line += f" ♛ "
+                        line += " ♛ "
                     else:
                         line += " . "
                 file.write(line + "\n")
             file.write("\n")
+
 
 numar_regine = 8
 print("Gasirea solutiilor pentru " + str(numar_regine) + " Regine ")
