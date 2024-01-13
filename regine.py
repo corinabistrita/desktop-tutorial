@@ -46,33 +46,46 @@ def vizualizare(solutii):
         afisare(solutie)
         print("\n")
 
-def salvare_in_fisier(solutii, nume_fisier):
-    with open(nume_fisier, 'a', encoding='utf-8') as file:
+def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
+    with open(nume_fisier, "w", encoding="utf-8") as file:
         for idx, solutie in enumerate(solutii):
             file.write(f"Solutia numarul: {idx + 1}\n")
-            for row in range(len(solutie)):
-                line = ""
+            for row in solutie:
+                line = "|"
                 for col in range(len(solutie)):
-                    if col == solutie[row]:
-                        line += " ♛ "
+                    if col == row:
+                        line += f" ♛ |"
                     else:
-                        line += " . "
+                        line += " . |"
                 file.write(line + "\n")
+                file.write("+---" * len(solutie) + "+\n")
             file.write("\n")
 
 
-numar_regine = 8
-print("Gasirea solutiilor pentru " + str(numar_regine) + " Regine ")
-time.sleep(2)
-solutii = gaseste_solutii(numar_regine)
-print(len(solutii), "solutions found")
+def main():
+    while True:
+        try:
+            numar_regine = int(input("Introduceți numărul de regine (între 4 și 10): "))
+            if 4 <= numar_regine <= 10:
+                break
+            else:
+                print("Numărul de regine trebuie să fie între 4 și 10. Reîncercați.")
+        except ValueError:
+            print("Introduceți un număr valid.")
 
-vizualizare(solutii)
+    print(f"Gasirea solutiilor pentru {numar_regine} Regine ")
+    time.sleep(2)
+    solutii = gaseste_solutii(numar_regine)
+    print(len(solutii), "solutions found")
 
-optiune_salvare = input("Doriți să salvați soluțiile într-un fișier? (da/nu): ")
-if optiune_salvare.lower() == "da":
-    nume_fisier = input("Introduceți numele fișierului de salvare (ex. solutii.txt): ")
-    salvare_in_fisier(solutii, nume_fisier)
-    print(f"Solutiile au fost salvate in fisierul {nume_fisier}.")
-else:
-    print("Programul se încheie.")
+    vizualizare(solutii)
+
+    salvare = input("Doriți să salvați soluțiile într-un fișier? (da/nu): ").lower()
+    if salvare == "da":
+        nume_fisier = input("Introduceți numele fișierului de salvare (implicit: solutii_regine.txt): ")
+        if not nume_fisier:
+            nume_fisier = "solutii_regine.txt"
+        salvare_in_fisier(solutii, nume_fisier)
+
+if __name__ == "__main__":
+    main()

@@ -4,7 +4,8 @@
 
 Acest program Python rezolvă problema plasării a unui număr specific de regine (de la 4 la 10 regine) pe o tablă de șah de dimensiune dată, astfel încât să nu existe conflicte între ele. Acesta oferă, de asemenea, opțiuni de afișare în consolă și salvare într-un fișier a soluțiilor găsite.
 
-![hippo](https://www.google.com/url?sa=i&url=https%3A%2F%2Fblogs.mathworks.com%2Fsteve%2F2017%2F04%2F20%2Fthe-eight-queens-problem%2F&psig=AOvVaw2lPe_WmPazhn9ThdZfkXN4&ust=1705238195998000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCID49ru52oMDFQAAAAAdAAAAABAD)
+![Alt text](queen-solver-animation-6.gif)
+
 ## Regulile Jocului
 
 - **Plasarea Reginelor:**
