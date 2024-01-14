@@ -42,27 +42,38 @@ def vizualizare(solutii):
 
 def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
     if not nume_fisier.lower().endswith(".txt"):
-        print("Eroare: Numele fișierului trebuie să aibă extensia .txt.")
         return "Eroare: Numele fișierului trebuie să aibă extensia .txt."
 
     try:
         with open(nume_fisier, "w", encoding="utf-8") as file:
             for idx, solutie in enumerate(solutii):
                 file.write(f"Solutia numarul: {idx + 1}\n")
-                file.write(tabla_to_str(solutie))
+                separator_line = "+---" * len(solutie) + "+"
+                file.write(separator_line + "\n")
+                
+                for row in range(len(solutie)):
+                    line = "|"
+                    for col in range(len(solutie)):
+                        if col == solutie[row]:
+                            line += " ♛ |"
+                        else:
+                            line += " . |"
+                    file.write(line + "\n")
+                    file.write(separator_line + "\n")
                 file.write("\n")
         return f"Fișierul {nume_fisier} a fost creat cu succes!"
     except Exception as e:
         return f"Eroare la crearea fișierului: {e}"
-
-
 
 def tabla_to_str(tabla):
     result = ""
     for row in tabla:
         line = "|"
         for col in range(len(tabla)):
-            line += f" {'♛' if col == row else '.'} |"
+            if col == row:
+                line += f" ♛ |"
+            else:
+                line += " . |"
         result += line + "\n" + "+---" * len(tabla) + "+\n"
     return result
 
@@ -91,7 +102,7 @@ def get_validare_da_nu():
 def main():
     numar_regine = get_validare_numar_regine()
     solutii = gaseste_solutii(numar_regine)
-    print(len(solutii), "solutions found")
+    print(len(solutii), "solutii gasite ")
 
     vizualizare(solutii)
 
