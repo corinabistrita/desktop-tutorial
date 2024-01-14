@@ -47,11 +47,18 @@ def vizualizare(solutii):
         print("\n")
 
 def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
+    if not nume_fisier.lower().endswith(".txt"):
+        print("Eroare: Numele fișierului trebuie să aibă extensia .txt.")
+        return
+
     with open(nume_fisier, "w", encoding="utf-8") as file:
         for idx, solutie in enumerate(solutii):
             file.write(f"Solutia numarul: {idx + 1}\n")
             file.write(tabla_to_str(solutie))
             file.write("\n")
+
+    print(f"Fisierul '{nume_fisier}' a fost creat cu succes!")
+
 
 def tabla_to_str(tabla):
     result = ""
@@ -66,20 +73,18 @@ def tabla_to_str(tabla):
     return result
 
 def get_valid_numar_regine():
-    while True:
-        try:
-            numar_regine = int(input("Introduceți numărul de regine (între 4 și 10): "))
-            if 4 <= numar_regine <= 10:
-                return numar_regine
-            else:
-                print("Numărul de regine trebuie să fie între 4 și 10. Reîncercați.")
-        except ValueError:
-            print("Introduceți un număr valid.")
+    try:
+        numar_regine = int(input("Introduceți numărul de regine (între 4 și 10): "))
+        if 4 <= numar_regine <= 10:
+            return numar_regine
+        else:
+            raise ValueError("Numărul de regine trebuie să fie între 4 și 10.")
+    except ValueError as e:
+        print(f"Erroare: {e}")
+        return get_valid_numar_regine()
 
 def main():
     numar_regine = get_valid_numar_regine()
-    print(f"Gasirea solutiilor pentru {numar_regine} Regine ")
-    time.sleep(2)
     solutii = gaseste_solutii(numar_regine)
     print(len(solutii), "solutions found")
 
