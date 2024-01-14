@@ -47,6 +47,10 @@ def vizualizare(solutii):
         print("\n")
 
 def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
+    if not solutii:
+        print("Nu există soluții de salvat.")
+        return
+
     if not nume_fisier.lower().endswith(".txt"):
         print("Eroare: Numele fișierului trebuie să aibă extensia .txt.")
         return
@@ -56,9 +60,6 @@ def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
             file.write(f"Solutia numarul: {idx + 1}\n")
             file.write(tabla_to_str(solutie))
             file.write("\n")
-
-    print(f"Fisierul '{nume_fisier}' a fost creat cu succes!")
-
 
 def tabla_to_str(tabla):
     result = ""
@@ -72,29 +73,47 @@ def tabla_to_str(tabla):
         result += line + "\n" + "+---" * len(tabla) + "+\n"
     return result
 
-def get_valid_numar_regine():
-    try:
-        numar_regine = int(input("Introduceți numărul de regine (între 4 și 10): "))
-        if 4 <= numar_regine <= 10:
-            return numar_regine
+def get_validare_numar_regine():
+    while True:
+        try:
+            numar_regine = int(input("Introduceți numărul de regine (între 4 și 10): "))
+            if 4 <= numar_regine <= 10:
+                return numar_regine
+            else:
+                raise ValueError("Numărul de regine trebuie să fie între 4 și 10.")
+        except ValueError as e:
+            print(f"Erroare: {e}")
+            retry = input("Doriți să încercați din nou? (da/nu): ").lower()
+            if retry != 'da':
+                raise
+
+def get_validare_da_nu():
+    while True:
+        raspuns = input("Doriți să salvați soluțiile într-un fișier? (da/nu): ").lower()
+        if raspuns.strip() in ['da', 'nu']:
+            return raspuns.strip()
         else:
-            raise ValueError("Numărul de regine trebuie să fie între 4 și 10.")
-    except ValueError as e:
-        print(f"Erroare: {e}")
-        return get_valid_numar_regine()
+            print("Eroare: Răspunsul trebuie să fie 'da' sau 'nu'.")
 
 def main():
-    numar_regine = get_valid_numar_regine()
+    numar_regine = get_validare_numar_regine()
     solutii = gaseste_solutii(numar_regine)
     print(len(solutii), "solutions found")
 
     vizualizare(solutii)
 
-    salvare = input("Doriți să salvați soluțiile într-un fișier? (da/nu): ").lower()
+    salvare = get_validare_da_nu()
     if salvare == "da":
-        nume_fisier = input("Introduceți numele fișierului de salvare (implicit: solutii_regine.txt): ")
-        if not nume_fisier:
-            nume_fisier = "solutii_regine.txt"
+        while True:
+            nume_fisier = input("Introduceți numele fișierului de salvare (implicit: solutii_regine.txt): ")
+            if not nume_fisier:
+                nume_fisier = "solutii_regine.txt"
+                break
+            elif not nume_fisier.lower().endswith(".txt"):
+                print("Eroare: Numele fișierului trebuie să aibă extensia .txt.")
+                continue
+            else:
+                break
         salvare_in_fisier(solutii, nume_fisier)
 
 if __name__ == "__main__":
