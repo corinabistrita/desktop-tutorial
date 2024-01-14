@@ -2,23 +2,17 @@ import time
 from colorama import Fore, Style
 
 def pozitie_corecta_tabla(testRow, testCol, solutie_curenta):
-    if testRow == 0:
-        return True
-
-    for row in range(0, testRow):
-        if testCol == solutie_curenta[row] or abs(testRow - row) == abs(testCol - solutie_curenta[row]):
-            return False
-
-    return True
+    return testRow == 0 or all(
+        testCol != solutie_curenta[row] and abs(testRow - row) != abs(testCol - solutie_curenta[row])
+        for row in range(testRow)
+    )
 
 def pozitionare_solutii(row, numar_regine, solutie_curenta, solutii):
     for col in range(numar_regine):
-        if not pozitie_corecta_tabla(row, col, solutie_curenta):
-            continue
-        else:
+        if pozitie_corecta_tabla(row, col, solutie_curenta):
             solutie_curenta[row] = col
-            if row == (numar_regine - 1):
-                solutii.append([x for x in solutie_curenta])
+            if row == numar_regine - 1:
+                solutii.append(solutie_curenta[:])
             else:
                 pozitionare_solutii(row + 1, numar_regine, solutie_curenta, solutii)
 
@@ -47,29 +41,28 @@ def vizualizare(solutii):
         print("\n")
 
 def salvare_in_fisier(solutii, nume_fisier="solutii_regine.txt"):
-    if not solutii:
-        print("Nu există soluții de salvat.")
-        return
-
     if not nume_fisier.lower().endswith(".txt"):
         print("Eroare: Numele fișierului trebuie să aibă extensia .txt.")
-        return
+        return "Eroare: Numele fișierului trebuie să aibă extensia .txt."
 
-    with open(nume_fisier, "w", encoding="utf-8") as file:
-        for idx, solutie in enumerate(solutii):
-            file.write(f"Solutia numarul: {idx + 1}\n")
-            file.write(tabla_to_str(solutie))
-            file.write("\n")
+    try:
+        with open(nume_fisier, "w", encoding="utf-8") as file:
+            for idx, solutie in enumerate(solutii):
+                file.write(f"Solutia numarul: {idx + 1}\n")
+                file.write(tabla_to_str(solutie))
+                file.write("\n")
+        return f"Fișierul {nume_fisier} a fost creat cu succes!"
+    except Exception as e:
+        return f"Eroare la crearea fișierului: {e}"
+
+
 
 def tabla_to_str(tabla):
     result = ""
     for row in tabla:
         line = "|"
         for col in range(len(tabla)):
-            if col == row:
-                line += f" ♛ |"
-            else:
-                line += " . |"
+            line += f" {'♛' if col == row else '.'} |"
         result += line + "\n" + "+---" * len(tabla) + "+\n"
     return result
 
@@ -114,7 +107,8 @@ def main():
                 continue
             else:
                 break
-        salvare_in_fisier(solutii, nume_fisier)
+        rezultat_salvare = salvare_in_fisier(solutii, nume_fisier)
+        print(rezultat_salvare)
 
 if __name__ == "__main__":
     main()
