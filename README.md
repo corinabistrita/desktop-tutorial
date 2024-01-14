@@ -2,13 +2,11 @@
 
 ## Găsirea Soluțiilor pentru Problema Celor 8 Regine
 
-Acest program Python rezolvă problema plasării unui număr variabil de regine (de la 4 la 10 regine) pe o tablă de șah de dimensiune dată, astfel încât să nu existe conflicte între ele. Acesta oferă, de asemenea, opțiuni de afișare în consolă și salvare într-un fișier a soluțiilor găsite.
-
-
+Acest program Python rezolvă problema plasării unui număr variabil de regine (de la 4 la 10 regine) pe o tablă de șah de dimensiune dată, astfel încât să nu existe conflicte între ele. Acesta oferă, de asemenea, opțiuni de afișare în consolă și salvare într-un fișier a soluțiilor găsite sau nu.
 
 ## Rezolvarea Problemei Celor 8 Regine
 
-Problema celor 8 regine presupune găsirea unei configurații valide așezate pe o tablă de șah 8x8 astfel încât nicio regină să nu amenințe nicio altă regină. Acest program folosește o abordare de tip backtracking și recursivitate pentru a explora toate posibilitățile și a găsi soluții în funcție de numărul de regine introdus de utilizator.
+Problema celor 8 regine presupune găsirea unei configurații valide așezate pe o tablă de șah 8x8,dar si nu numai, astfel încât nicio regină să nu amenințe nicio altă regină. Acest program folosește o abordare de tip backtracking și recursivitate pentru a explora toate posibilitățile și a găsi soluții în funcție de numărul de regine introdus de utilizator.
 
 ![queen-solver-animation-6](https://coolbutuseless.github.io/img/8queens/anim.gif)
 
@@ -23,9 +21,6 @@ Unul dintre primele lucruri pe care le putem face este să observăm că putem p
   - Nu pot exista două regine pe aceeași linie sau coloană.
   - O regină amenință orice pătrat de pe aceeași linie, coloană sau diagonală.
 
-- **Scopul Programului:**
-  - Plasarea tuturor celor opt regine pe tablă fără ca acestea să se amenințe reciproc.
-  - Soluție pentru cele 8 Regine
 
 ## Detalii de Implementare
 
